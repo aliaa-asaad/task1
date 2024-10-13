@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:innova_flutter/routes.dart';
 
 class Screen3 extends StatefulWidget {
   const Screen3({super.key});
@@ -9,14 +10,16 @@ class Screen3 extends StatefulWidget {
 
 class _Screen3State extends State<Screen3> {
   int quantity = 1;
+
   @override
   Widget build(BuildContext context) {
+    final String title = ModalRoute.of(context)!.settings.arguments as String;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text(
-          'Details screen',
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        title: Text(
+          title,
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
       ),
       body: Padding(
@@ -31,7 +34,7 @@ class _Screen3State extends State<Screen3> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
                   image: const DecorationImage(
-                    image: NetworkImage('https://picsum.photos/250?image=9'),
+                    image: NetworkImage('https://picsum.photos/200/300'),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -69,33 +72,39 @@ class _Screen3State extends State<Screen3> {
                     color: Color(0xff218261),
                   ),
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey),
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: Row(
-                    children: [
-                      IconButton(
-                          onPressed: () {
-                            setState(() {
-                              if (quantity < 1) {
-                                quantity = 0;
-                              } else {
-                                quantity--;
-                              }
-                            });
-                          },
-                          icon: const Icon(Icons.remove)),
-                      Text(quantity.toString()),
-                      IconButton(
-                          onPressed: () {
-                            setState(() {
-                              quantity++;
-                            });
-                          },
-                          icon: const Icon(Icons.add)),
-                    ],
+                InkWell(
+                  borderRadius: BorderRadius.circular(30),
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    child: Row(
+                      children: [
+                        IconButton(
+                            onPressed: () {
+                              setState(() {
+                                if (quantity < 1) {
+                                  quantity = 0;
+                                } else {
+                                  quantity--;
+                                }
+                              });
+                            },
+                            icon: const Icon(Icons.remove)),
+                        Text(quantity.toString()),
+                        IconButton(
+                            onPressed: () {
+                              setState(() {
+                                quantity++;
+                              });
+                            },
+                            icon: const Icon(Icons.add)),
+                      ],
+                    ),
                   ),
                 ),
               ],
@@ -103,20 +112,26 @@ class _Screen3State extends State<Screen3> {
             const SizedBox(
               height: 24,
             ),
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: 48,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: const Color(0xff218261),
-                borderRadius: BorderRadius.circular(30),
-              ),
-              child: const Text(
-                'Add to cart',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold),
+            InkWell(
+              borderRadius: BorderRadius.circular(30),
+              onTap: () {
+                Navigator.pushNamed(context, Routes.screen7);
+              },
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: 48,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: const Color(0xff218261),
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: const Text(
+                  'Add to cart',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold),
+                ),
               ),
             )
           ],
